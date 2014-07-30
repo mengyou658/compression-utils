@@ -2,6 +2,11 @@
 Simple and easy to use library to compress and decompress files in the .tar.gz format. The library is simple a
 wrapper for the Apache Commons Compress library, but it provides a much easier to use File-orientated interface.
 
+## Installation
+You can use this library as you seen fit, for whatever purpose. I provide no assurances that this works, but you can
+if you like. To use this, you can take this source code if you like or, you can download and import the .jar file in
+the root of the repo.
+
 ## The Package
 The two most important classes are the `Compressor` and `Decompressor` classes. Both of these have static methods
 to perform their function, but they also provide a non-static interface too.
