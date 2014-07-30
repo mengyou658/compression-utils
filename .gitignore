@@ -5,6 +5,9 @@
 # Ignore docs folder
 doc
 
+# Do not include my personal test files
+data
+
 # Ignore compiled files and packages
 *.class
 *.jar
