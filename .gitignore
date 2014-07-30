@@ -10,7 +10,6 @@ test
 
 # Ignore compiled files and packages
 *.class
-*.jar
 *.war
 *.ear
 
