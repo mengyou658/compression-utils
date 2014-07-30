@@ -6,7 +6,7 @@
 doc
 
 # Do not include my personal test files
-data
+test
 
 # Ignore compiled files and packages
 *.class
