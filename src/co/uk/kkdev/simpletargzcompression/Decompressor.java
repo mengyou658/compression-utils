@@ -129,18 +129,31 @@ public class Decompressor {
 	}
 	
 	/** 
-	 * Static helper method that squelches errors for creating a decompression object and calling .decompress() on it.
-	 * 
-	 * @param compressedInput    The archive to unpack. Must end with '.tar.gz'.
-	 * @param uncompressedOutput The location to put the output.
+	 * Convenience for {@link Decompressor.decompress(File, File, ProgressListener)}
 	 */
-	public static void decompress(File compressedInput, File uncompressedOutput) {
+	public static boolean decompress(File compressedInput, File uncompressedOutput) {
+		return decompress(compressedInput, uncompressedOutput, null);
+	}
+	
+	/**
+	 * Static convenience method to decompress the given files. This method does not report 
+	 * Exceptions, but does report whether or not decompression happened successfully. If you 
+	 * want/need more control over Exception handling, please use the non-static methods.
+	 * 
+	 * @param compressedInput    The file to decompress (must end in '.tar.gz')
+	 * @param uncompressedOutput Where to put the decompressed files
+	 * @param listener           Used for call backs, set this to null if you don't want/need this
+	 * @return whether or not decompression successfully occurred 
+	 */
+	public static boolean decompress(File compressedInput, File uncompressedOutput, ProgressListener listener) {
 		try {
 			Decompressor decompressor = new Decompressor(compressedInput, uncompressedOutput);
+			decompressor.setListener(listener);
 			decompressor.decompress();
+			return true;
 		} catch (TarGZDecompressionException e) {
 			e.printStackTrace();
+			return false;
 		}
-		
 	}
 }

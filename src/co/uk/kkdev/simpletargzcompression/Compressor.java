@@ -53,16 +53,7 @@ public class Compressor {
 	private ProgressListener mListener;
 
 	/**
-	 * Convenience constructor for {@link Compressor(File, File[], File) you can use when you want to
-	 * only compress one file or directory.
-	 * 
-	 * @param root              The file representing the root of the relative naming of the archived files.
-	 * @param fileToCompress    The File object representing the file or directory you wish to compress.
-	 * @param compressionOutput The File object representing the output file of compression, it must end in .tar.gz. 
-	 *                          If this location already exists, it will be overwritten.
-	 *
-	 * @throws TarGZCompressionException if the output file does not end in .tar.gz or if the output 
-	 *         file exists and is a directory.
+	 * Convenience constructor for {@link Compressor(File, File[], File).
 	 */
 	public Compressor(File root, File fileToCompress, File compressionOutput) throws TarGZCompressionException {
 		this(root, new File[] {fileToCompress}, compressionOutput);
@@ -174,30 +165,49 @@ public class Compressor {
 		}
 	}
 	
-	/** 
-	 * Convenience method for {@link Compressor.compress(File, File[], File)}.
-	 * 
-	 * @param root           Root of the archive to create.
-	 * @param fileToCompress The file or folder to compress.
-	 * @param output         The output destination, must end in .tar.gz.
+	/**
+	 * Convenience for {@link Compressor.compress(File, File[], File, ProgressListener)}.
 	 */
-	public static void compress(File root, File fileToCompress, File output) {
-		compress(root, new File[] { fileToCompress }, output);
+	public static boolean compress(File root, File fileToCompress, File output) {
+		return compress(root, fileToCompress, output, null);
 	}
 	
-	/** 
-	 * Static helper method that squelches errors for creating a compression object and calling .compress() on it.
-	 * 
-	 * @param root           Root of the archive to create.
-	 * @param fileToCompress The files or folders to compress.
-	 * @param output         The output destination, must end in .tar.gz.
+	/**
+	 * Convenience for {@link Compressor.compress(File, File[], File, ProgressListener)}.
 	 */
-	public static void compress(File root, File[] filesToCompress, File output) {
+	public static boolean compress(File root, File[] filesToCompress, File output) {
+		return compress(root, filesToCompress, output, null);
+	}
+	
+	/**
+	 * Convenience for {@link Compressor.compress(File, File[], File, ProgressListener)}.
+	 */
+	public static boolean compress(File root, File fileToCompress, File output, 
+			ProgressListener progressListener) {
+		return compress(root, new File[] { fileToCompress }, output, progressListener);
+	}
+	
+	/**
+	 * Static convenience method to compress the given files. This method does not report 
+	 * Exceptions, but does report whether or not compression happened successfully. If you 
+	 * want/need more control over Exception handling, please use the non-static methods.
+	 * 
+	 * @param root             The root of the archive to create
+	 * @param filesToCompress  The files/directories to compress
+	 * @param output           The archive to create (must end in '.tar.gz')
+	 * @param progressListener Used to get event call backs, set as null if you do not want this.
+	 * @return whether or not compression successfully completed.
+	 */
+	public static boolean compress(File root, File[] filesToCompress, File output, 
+			ProgressListener progressListener) {
 		try {
 			Compressor compressor = new Compressor(root, filesToCompress, output);
+			compressor.setListener(progressListener);
 			compressor.compress();
+			return true;
 		} catch(TarGZCompressionException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 }

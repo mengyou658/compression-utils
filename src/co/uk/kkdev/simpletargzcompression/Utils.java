@@ -2,6 +2,11 @@ package co.uk.kkdev.simpletargzcompression;
 
 import java.io.File;
 
+/**
+ * Internal helper methods.
+ * 
+ * @author Anthony Williams (github.com/92antwilliams)
+ */
 public class Utils {
 	
 	// TODO: find the common root of multiple files.
