@@ -32,11 +32,18 @@ public class Decompressor {
 		public void onDecompressionStart();
 		
 		/**
+		 * Called when a directory is decompressed.
+		 * 
+		 * @param directory The directory that was just decompressed.
+		 */
+		public void onDirectoryDecompressed(String directory);
+		
+		/**
 		 * Called when a file is decompressed.
 		 * 
 		 * @param file The file that was just decompressed.
 		 */
-		public void onFileDecompressed(File file);
+		public void onFileDecompressed(String file);
 		
 		/**
 		 * Called when decompression is completed.
@@ -104,7 +111,7 @@ public class Decompressor {
 				File destPath = new File(mUncompressedOutput, tarEntry.getName());
 			    if (tarEntry.isDirectory()) {
 			        destPath.mkdirs();
-			        if (mListener != null) mListener.onFileDecompressed(tarEntry.getFile());
+			        if (mListener != null) mListener.onDirectoryDecompressed(tarEntry.getName());
 			    } else {
 			    	destPath.createNewFile();
 			    	byte [] btoRead = new byte[BUFFER_SIZE];
@@ -114,7 +121,7 @@ public class Decompressor {
 			            bout.write(btoRead,0,len);
 			        }
 			        bout.close();
-			        if (mListener != null) mListener.onFileDecompressed(tarEntry.getFile());
+			        if (mListener != null) mListener.onFileDecompressed(tarEntry.getName());
 			    }
 			}
 		} catch (IOException e) {

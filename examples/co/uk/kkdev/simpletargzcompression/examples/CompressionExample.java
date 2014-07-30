@@ -13,8 +13,9 @@ import co.uk.kkdev.simpletargzcompression.Decompressor;
 public class CompressionExample {
 	
 	public static void main(String[] args) {
-		Compressor.compress(new File("test/data/"), new File("test/data/"), new File("test/out/dest.tar.gz"));
-		Decompressor.decompress(new File("test/out/dest.tar.gz"), new File("test/out/uncompressed"));
+		Listener listener = new Listener();
+		Compressor.compress(new File("test/data/"), new File("test/data/"), new File("test/out/dest.tar.gz"), listener);
+		Decompressor.decompress(new File("test/out/dest.tar.gz"), new File("test/out/uncompressed"), listener);
 	}
 
 }
