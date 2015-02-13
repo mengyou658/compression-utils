@@ -24,11 +24,10 @@ check the source and the javadocs for more information.
 Simple call `Compressor.compress()` or `Decompressor.decompress()`. That's it! Easy right? You do have to check your
 own File inputs this way, though.
 
-    ````java
+    ```java
     Compressor.compress(rootFolder, filesToCompress, outputFile, listener);
-    
-    ````java
     Decompressor.decompress(compressedInput, uncompressedOutput, listener);
+    ```
 
 ### Detailed
 If you want more control over how errors are handled you can create Compressor or Decompressor objects yoruself
@@ -36,19 +35,21 @@ and handle the exceptions the constructors and instance methods produce.
 
 #### Compression
 
-    ````java
+    ```java
     // will throw error if input files are no good
     Compressor compresssor = new Compressor(directory, directory, output); 
     // will throw an error if an IOException occurs
     compressor.compress();
+    ```
 
 #### Decompression
 
-    ````java
+    ```java
     // will throw error if input files are no good
     Decompressor decompresssor = new Decompressor(archive, outputDirectory);
     // will throw an error if an IOException occurs
     decompressor.decompress();
+    ```
 
 ### Progress Listener
 You can optionally specify a ProgressListener for each of the classes. Check the source and the javadoc for more info.
